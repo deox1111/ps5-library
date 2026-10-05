@@ -7,6 +7,7 @@
 ## Features
 
 - **One payload.** `ps5-library.elf` adds a **PS5 Library** tile to your home screen. The tile opens the library in the PS5 browser.
+- **Feels like the console.** The game you select fills the screen, rows of games sit underneath, and every game has a full-screen page.
 - **One button.** The console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection or a console restart.
@@ -59,9 +60,11 @@ PS5 Library does not include, host or link to any games. It shows whatever catal
 
 ## Screenshots
 
-| Game page | Downloads |
+![Game page](docs/game.jpg)
+
+| Browse | Downloads |
 | --- | --- |
-| ![Game page](docs/game.jpg) | ![Downloads](docs/downloads.jpg) |
+| ![Browse](docs/browse.jpg) | ![Downloads](docs/downloads.jpg) |
 
 ## Troubleshooting
 
