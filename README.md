@@ -31,7 +31,7 @@
 
 ## Catalog
 
-PS5 Library does not include, host or link to any games. It shows whatever catalog you connect. A catalog is an HTTP(S) address that returns JSON:
+PS5 Library does not publically include, host or link to any games (yet). It shows whatever catalog you connect. A catalog is an HTTP(S) address that returns JSON:
 
 ```json
 {
