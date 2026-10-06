@@ -27,36 +27,100 @@
 1. Download `ps5-library.elf` from [Releases](../../releases/latest).
 2. Load it with your ELF loader (port 9021) or your payload manager. Add it to **autoload**: the home screen tile only works while the payload is running.
 3. A notification says **PS5 Library added to the home screen**. Open the tile.
-4. On first start, connect a catalog: enter its address and access key.
+4. On first start, connect a catalog. See [Catalogs](#catalogs) below.
 
-## Catalog
+## Catalogs
 
-PS5 Library does not publically include, host or link to any games. It shows whatever catalog you connect. A catalog is an HTTP(S) address that returns JSON:
+PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalog you connect. A catalog is a JSON file at a web address.
+
+### Connect a catalog
+
+> **Tip:** typing a long address with the controller is slow. Open `http://<ps5-ip>:9999` on your phone or PC and paste the address there.
+
+1. Open PS5 Library. On first start it asks for a catalog. Later you find it in **Settings → Catalog**.
+2. **Catalog address:** the full address of the JSON file. It must start with `http://` or `https://`.
+3. **Access key:** fill it in only if the catalog's owner gave you a key. Otherwise leave it empty. The key is sent as `Authorization: Bearer <key>`.
+4. Press **Connect** (or **Save** in Settings). The library loads the catalog straight away and shows **Catalog connected — N items**.
+
+Good to know:
+- You connect one catalog at a time. Saving a new address replaces the old catalog.
+- The library checks the catalog every minute, so new games show up by themselves. If the catalog goes offline, you keep the last copy.
+- **Disconnect** in Settings removes the catalog.
+
+### Catalogs on GitHub
+
+Use the **Raw** address. Open the file on GitHub, press **Raw** and copy the address from the browser. The normal file page is a web page, not the JSON file.
+
+| ✗ Doesn't work | ✓ Works |
+| --- | --- |
+| `https://github.com/user/repo/blob/main/catalog.json` | `https://raw.githubusercontent.com/user/repo/main/catalog.json` |
+
+### Pegasus DL catalogs
+
+PS5 Library has its own catalog format, described below. Catalogs made for Pegasus DL (`"packages": [...]`) don't work with it. Neither do Pegasus source lists like `default-sources.json`: a source list has no games in it, it only points to other catalogs. In both cases the library answers **no catalog answered at that address**.
+
+### Make your own catalog
+
+The smallest catalog has one entry with one file:
 
 ```json
 {
   "entries": [
     {
-      "id": "unique-id",
-      "title": "Game name (v01.000)",
+      "title": "My Homebrew App",
+      "files": [{"url": "https://example.com/my-app.pkg"}]
+    }
+  ]
+}
+```
+
+Put the file anywhere that serves files over HTTP(S):
+- **GitHub:** add `catalog.json` to a repository or a gist, then connect its Raw address.
+- **Your PC:** in the folder with `catalog.json`, run `python -m http.server 8000` and connect `http://<pc-ip>:8000/catalog.json`.
+
+A complete entry, with a second mirror:
+
+```json
+{
+  "entries": [
+    {
+      "id": "my-game-exfat",
+      "title": "Game name (v1.02)",
       "title_id": "PPSA01234",
       "kind": "game",
+      "platform": "ps5",
       "format": "exfat",
       "size": "52GB",
       "region": "EUR",
       "firmware": "4.xx",
+      "files": [{"url": "https://mirror-one.example/PPSA01234.7z", "name": "PPSA01234.7z"}],
       "source_sets": [
-        {"host": "example.com", "files": [{"url": "https://example.com/file", "name": "PPSA01234.7z"}]}
+        {"host": "mirror-one.example", "files": [{"url": "https://mirror-one.example/PPSA01234.7z", "name": "PPSA01234.7z"}]},
+        {"host": "mirror-two.example", "files": [{"url": "https://mirror-two.example/PPSA01234.7z", "name": "PPSA01234.7z"}]}
       ]
     }
   ]
 }
 ```
 
-- `kind` is `game`, `dlc` or `update`.
-- `format` is `exfat`, `ffpkg`, `ffpfs`, `ffpfsc`, `fpkg` or `pkg`.
-- `source_sets` lists alternative mirrors. If one fails, the next one is tried.
-- The access key is sent as `Authorization: Bearer <key>`.
+| Field | | What it does |
+| --- | --- | --- |
+| `entries` | **required** | The list of games. It must contain at least one entry. |
+| `files` | **required** | The files to download: `{"url": "...", "name": "..."}`. `name` is optional; without it the name comes from the URL. Several files make one download, for example the parts of a split archive (`.7z.001`, `.7z.002`). |
+| `title` | recommended | The name in the Store. Without it the first file name is used. A version in brackets, like `(v1.02)`, is shown as the version. |
+| `title_id` | recommended | `PPSA01234` or `CUSA01234`. Brings the cover and background art, groups a game with its DLC and updates, marks it **Ready to play** once installed, and checks that the download is the right game. |
+| `kind` | | `game` (default), `dlc` or `update`. |
+| `platform` | | `ps5` (default) or `ps4`. Used for the badge and the platform filter. |
+| `format` | | `exfat`, `ffpkg`, `ffpfs`, `ffpfsc`, `fpkg` or `pkg`. Shown on the game page. When a game is listed in several formats, exFAT is offered first. The installer finds the real type by itself. |
+| `size` | | Download size, like `"52GB"` or `"700 MB"`. Used for **Quick downloads** and for the free space warning. |
+| `region`, `firmware`, `version` | | Shown on the game page. `firmware` is the minimum firmware, like `"4.xx"`. |
+| `password` | | The archive's password. |
+| `source_sets` | | Alternative mirrors: `[{"host": "...", "files": [...]}]`. They are tried in order, and when one fails the next one is used. Put the first mirror's files in `files` too. `host` tells the library which mirrors need a CAPTCHA or an account. |
+| `id` | | Your own ID for the entry, unique within the catalog. |
+
+What a download can be:
+- A `.pkg`, an exFAT/FFPKG/FFPFS image, or an archive with one of them inside (`.7z`, `.zip`, `.rar`, `.tar`).
+- Direct download links work best. Pages of some file hosts work too. Hosts that ask for a CAPTCHA need an account in **Settings → Download accounts**.
 
 ## Screenshots
 
@@ -69,6 +133,7 @@ PS5 Library does not publically include, host or link to any games. It shows wha
 ## Troubleshooting
 
 - **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
+- **"No catalog answered at that address".** Open the address in a browser on your PC. You should see JSON that starts with `{"entries": [`. If you see a web page, use the direct file address (on GitHub, the [Raw](#catalogs-on-github) one). If the catalog has a key, check the key. Catalogs made for other apps, like Pegasus DL, don't work.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **A game shows "Needs an account".** All its mirrors are CAPTCHA hosts. Add a TorBox account or a premium key in **Settings → Download accounts**.
 
