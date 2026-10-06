@@ -14,7 +14,7 @@
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
-- **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch.
+- **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)).
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Optional accounts.** A premium key or a TorBox account can download from supported hosts directly.
 
@@ -157,6 +157,7 @@ What a download can be:
 ## Troubleshooting
 
 - **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
+- **Another payload uses port 9999.** PS5 Library moves to port **19999** (then 29999) and says so in a notification. It stays on that port on later launches, and the home screen tile follows it. On your phone or PC, open `http://<ps5-ip>:19999`. To pick the port yourself, set `"port"` in `/data/ps5-library/config.json`.
 - **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
 - **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
