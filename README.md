@@ -166,7 +166,8 @@ Shout-outs:
 
 ## Disclaimer
 
-PS5 Library is not affiliated with Sony Interactive Entertainment. It does not provide any games. Only install content you have the right to use.
+PS5 Library is not affiliated with Sony Interactive Entertainment. PS5 Library is a downloader and local file-management tool. It does not include package catalogs, provide package links, bypass accounts, spoof PSN, bypass anti-cheat, or unlock content.
+Use it only with content you own or have permission to download.
 
 ## License
 
