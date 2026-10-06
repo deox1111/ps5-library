@@ -15,7 +15,20 @@
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch.
-- **Optional accounts.** Some file hosts ask for a CAPTCHA. A premium key or a TorBox account downloads from them directly.
+- **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
+- **Optional accounts.** A premium key or a TorBox account can download from supported hosts directly.
+
+## Downloads that need a browser
+
+Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. For multipart downloads, the library opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
+
+![Open a download host on PS5](docs/browser.jpg)
+
+If a site does not work in the PS5 browser, choose **Use phone or computer**. Use the same Wi-Fi as the console, complete verification there, and copy the file's download link into the library.
+
+![Phone or computer fallback](docs/browser-phone.jpg)
+
+Browser capture is tested on firmware 13.60 with controlled multipart files. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual. Link-Vault currently opens its provider selection page; automatic Link-Vault link and filename parsing is deferred.
 
 ## Requirements
 
@@ -131,7 +144,7 @@ A complete entry, with a second mirror:
 
 What a download can be:
 - A `.pkg`, an exFAT/FFPKG/FFPFS image, or an archive with one of them inside (`.7z`, `.zip`, `.rar`, `.tar`).
-- Direct download links work best. Pages of some file hosts work too. Hosts that ask for a CAPTCHA need an account in **Settings → Download accounts**.
+- Direct download links work best. Pages of some file hosts work too. For a CAPTCHA, use **Solve CAPTCHA**, or configure a supported account in **Settings → Download accounts**.
 
 ## Screenshots
 
@@ -148,7 +161,7 @@ What a download can be:
 - **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
-- **A game shows "Needs an account".** All its mirrors are CAPTCHA hosts. Add a TorBox account or a premium key in **Settings → Download accounts**.
+- **A game shows "Needs a CAPTCHA".** Choose **Solve CAPTCHA → Open on PS5**, or add a supported TorBox account or premium key in **Settings → Download accounts**.
 
 ## Credits
 
