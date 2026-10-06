@@ -12,7 +12,7 @@
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection or a console restart.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
-- **Several catalogs at once.** Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
+- **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch.
 - **Optional accounts.** Some file hosts ask for a CAPTCHA. A premium key or a TorBox account downloads from them directly.
@@ -20,6 +20,7 @@
 ## Requirements
 
 - A jailbroken PS5 with an ELF loader. Tested on firmware 13.60.
+- Free space: a game packed as an archive (7z, rar, zip) needs about **twice its size** free while it installs, because the archive and the unpacked game are on the drive together. The archive is deleted after the install. The library checks the space before it downloads.
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus)
 
@@ -144,6 +145,7 @@ What a download can be:
 
 - **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
 - **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
+- **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **A game shows "Needs an account".** All its mirrors are CAPTCHA hosts. Add a TorBox account or a premium key in **Settings → Download accounts**.
