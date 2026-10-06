@@ -20,7 +20,7 @@
 
 ## Downloads that need a browser
 
-Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. For multipart downloads, the library opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
+Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. **Solve CAPTCHA** is on the game page (next to **Download & Install** when some mirrors need a browser) and on a failed download whose hosts showed a CAPTCHA or a web page instead of the file. For multipart downloads, the library opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
 
 ![Open a download host on PS5](docs/browser.jpg)
 
@@ -163,6 +163,7 @@ What a download can be:
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **A game shows "Needs a CAPTCHA".** Choose **Solve CAPTCHA → Open on PS5**, or add a supported TorBox account or premium key in **Settings → Download accounts**.
+- **A download fails with "returned a web page instead of a file" or "needs a browser CAPTCHA".** The host only gives the file to a browser. Choose **Solve CAPTCHA** on that download. If the captured link doesn't work, pick another mirror.
 
 ## Credits
 
