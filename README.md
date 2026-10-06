@@ -10,7 +10,7 @@
 - **Feels like the console.** The game you select fills the screen, rows of games sit underneath, and every game has a full-screen page.
 - **One button.** The console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
-- **Downloads resume** after a pause, a dropped connection or a console restart.
+- **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
