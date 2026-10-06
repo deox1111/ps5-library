@@ -26,6 +26,7 @@
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)).
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
+- **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
 - **Optional accounts.** A premium key or a TorBox account can download from supported hosts directly.
 
 ## Downloads that need a browser
@@ -38,7 +39,9 @@ If a site does not work in the PS5 browser, choose **Use phone or computer**. Us
 
 ![Phone or computer fallback](docs/browser-phone.jpg)
 
-Browser capture is tested on firmware 13.60 with controlled multipart files. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual. Link-Vault currently opens its provider selection page; automatic Link-Vault link and filename parsing is deferred.
+For **Link-Vault**, the first attempt briefly opens Link-Vault on the PS5. Complete its verification if asked; the library reads the file list and opens your selected host automatically. Links and filenames are saved on the console, so later attempts go straight to the host. No PC, VPS or Telegram connection is needed.
+
+Browser capture is tested on firmware 13.60 with controlled multipart files, and Link-Vault resolution is tested on the console through to the selected hosting page. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual.
 
 ## Requirements
 
