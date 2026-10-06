@@ -44,6 +44,10 @@ Browser capture is tested on firmware 13.60 with controlled multipart files. Com
 3. A notification says **PS5 Library added to the home screen**. Open the tile.
 4. The homebrew catalog [evoX-CoreOS](#the-default-catalog) is already on. Add more in **Settings → Catalogs**, see [Catalogs](#catalogs) below.
 
+To update, load the new ELF. Version 0.7.8 and newer replace whatever version is running (a notification says so) and keep your catalogs, settings, accounts and downloads. A download in progress pauses; **Resume** continues it.
+
+To reset, delete `/data/ps5-library` and load the ELF again (0.7.8 or newer); the running library stops and starts fresh. An update never resets anything.
+
 ## Catalogs
 
 PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalogs you add. A catalog is a JSON file at a web address.
@@ -157,6 +161,8 @@ What a download can be:
 ## Troubleshooting
 
 - **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
+- **Covers are black in the PS5 browser.** Older firmware browsers (for example 5.10) could not place the cover images before 0.7.8. Update.
+- **"PS5 Library is already running".** The same version already runs, so the new launch exits. A different version replaces it (0.7.8 or newer).
 - **Another payload uses port 9999.** PS5 Library moves to port **19999** (then 29999) and says so in a notification. It stays on that port on later launches, and the home screen tile follows it. On your phone or PC, open `http://<ps5-ip>:19999`. To pick the port yourself, set `"port"` in `/data/ps5-library/config.json`.
 - **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
 - **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
