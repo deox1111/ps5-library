@@ -35,7 +35,7 @@ Browser capture is tested on firmware 13.60 with controlled multipart files. Com
 - A jailbroken PS5 with an ELF loader. Tested on firmware 13.60.
 - Free space: a game packed as an archive (7z, rar, zip) needs about **twice its size** free while it installs, because the archive and the unpacked game are on the drive together. The archive is deleted after the install. The library checks the space before it downloads.
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
-- [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus)
+- [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus). With 1.7beta4 or newer, **My games** also lists games installed from PKG files, PS4 games included.
 
 ## Install
 
@@ -168,6 +168,7 @@ What a download can be:
 - **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
+- **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
 - **A game shows "Needs a CAPTCHA".** Choose **Solve CAPTCHA → Open on PS5**, or add a supported TorBox account or premium key in **Settings → Download accounts**.
 - **A download fails with "returned a web page instead of a file" or "needs a browser CAPTCHA".** The host only gives the file to a browser. Choose **Solve CAPTCHA** on that download. If the captured link doesn't work, pick another mirror.
 
