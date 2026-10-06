@@ -135,11 +135,11 @@ What a download can be:
 
 ## Screenshots
 
-![Game page](docs/game.jpg)
-
-| Browse | Downloads |
+| Game page | Browse |
 | --- | --- |
-| ![Browse](docs/browse.jpg) | ![Downloads](docs/downloads.jpg) |
+| ![Game page](docs/game.jpg) | ![Browse](docs/browse.jpg) |
+| **Downloads** | **Settings → Catalogs** |
+| ![Downloads](docs/downloads.jpg) | ![Settings → Catalogs](docs/catalogs.jpg) |
 
 ## Troubleshooting
 
