@@ -2,6 +2,16 @@
 <h1 align="center">PS5 Library</h1>
 <p align="center"><b>A game library for jailbroken PS5.</b><br>Pick a game, press <b>Download&nbsp;&amp;&nbsp;Install</b>, play it from your home screen.</p>
 
+<p align="center">
+  <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/deox1111/ps5-library?label=release&color=3d7bff" alt="Latest release"></a>
+  <a href="../../releases"><img src="https://img.shields.io/github/downloads/deox1111/ps5-library/total?color=3d7bff" alt="Downloads"></a>
+  <img src="https://img.shields.io/badge/language-C%2B%2B17-00599C?logo=cplusplus&logoColor=white" alt="Language: C++17">
+  <img src="https://img.shields.io/badge/platform-PS5-003791?logo=playstation&logoColor=white" alt="Platform: PS5">
+  <img src="https://img.shields.io/badge/tested%20on-FW%2013.60-555" alt="Tested on firmware 13.60">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License: GPL-3.0-or-later"></a>
+  <a href="#donate"><img src="https://img.shields.io/badge/donate-XMR-FF6600?logo=monero&logoColor=white" alt="Donate XMR"></a>
+</p>
+
 <p align="center"><img src="docs/store.jpg" alt="Store"></p>
 
 ## Features
@@ -185,6 +195,16 @@ Shout-outs:
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ps5-payload-sdk](https://github.com/ps5-payload-dev/sdk) by John Törnblom
 - [cpp-httplib](https://github.com/yhirose/cpp-httplib), [nlohmann/json](https://github.com/nlohmann/json), curl, libarchive, OpenSSL
+
+## Donate
+
+If PS5 Library saves you time, you can support it with Monero (XMR):
+
+```
+4A66wqfp2Lp1TyBC5DGYA1DNYUv5RB1zPASbmCaus78PCbcEfvp3cjbR2HxFmnYbEVgZ7NZCCsuBcYLLnUuZYjej54YLoFS
+```
+
+<img src="docs/xmr.svg" width="160" alt="Monero address QR code">
 
 ## Disclaimer
 
