@@ -12,6 +12,7 @@
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection or a console restart.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
+- **Several catalogs at once.** Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch.
 - **Optional accounts.** Some file hosts ask for a CAPTCHA. A premium key or a TorBox account downloads from them directly.
@@ -27,25 +28,26 @@
 1. Download `ps5-library.elf` from [Releases](../../releases/latest).
 2. Load it with your ELF loader (port 9021) or your payload manager. Add it to **autoload**: the home screen tile only works while the payload is running.
 3. A notification says **PS5 Library added to the home screen**. Open the tile.
-4. On first start, connect a catalog. See [Catalogs](#catalogs) below.
+4. The homebrew catalog [evoX-CoreOS](#the-default-catalog) is already on. Add more in **Settings → Catalogs**, see [Catalogs](#catalogs) below.
 
 ## Catalogs
 
-PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalog you connect. A catalog is a JSON file at a web address.
+PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalogs you add. A catalog is a JSON file at a web address.
 
-### Connect a catalog
+### Add a catalog
 
 > **Tip:** typing a long address with the controller is slow. Open `http://<ps5-ip>:9999` on your phone or PC and paste the address there.
 
-1. Open PS5 Library. On first start it asks for a catalog. Later you find it in **Settings → Catalog**.
-2. **Catalog address:** the full address of the JSON file. It must start with `http://` or `https://`.
+1. Open **Settings → Catalogs**.
+2. **Add a catalog:** the full address of the JSON file. It must start with `http://` or `https://`.
 3. **Access key:** fill it in only if the catalog's owner gave you a key. Otherwise leave it empty. The key is sent as `Authorization: Bearer <key>`.
-4. Press **Connect** (or **Save** in Settings). The library loads the catalog straight away and shows **Catalog connected — N items**.
+4. Press **Add catalog**. The library reads the catalog straight away and its games show up in the Store.
 
 Good to know:
-- You connect one catalog at a time. Saving a new address replaces the old catalog.
-- The library checks the catalog every minute, so new games show up by themselves. If the catalog goes offline, you keep the last copy.
-- **Disconnect** in Settings removes the catalog.
+- You can add up to 30 catalogs. The Store shows the games of every catalog that is on. When two catalogs have the same game, its page lists both.
+- **Turn off** hides a catalog's games, **Remove** deletes the catalog from the list.
+- The library checks catalogs by itself: catalogs with a key every minute, the others every 10 minutes. **Refresh all** checks them now. If a catalog goes offline, you keep its last copy.
+- **Browse** can show the games of one catalog only.
 
 ### Catalogs on GitHub
 
@@ -57,7 +59,13 @@ Use the **Raw** address. Open the file on GitHub, press **Raw** and copy the add
 
 ### Pegasus DL catalogs
 
-PS5 Library has its own catalog format, described below. Catalogs made for Pegasus DL (`"packages": [...]`) don't work with it. Neither do Pegasus source lists like `default-sources.json`: a source list has no games in it, it only points to other catalogs. In both cases the library answers **no catalog answered at that address**.
+Catalogs made for [Pegasus DL](https://github.com/pegasus-ps5/pegasus-dl) work as they are: add the catalog's address like any other. Both Pegasus package shapes are read (`downloadLinks`, or `url` with `filename`), and every link of a package becomes a download mirror.
+
+A Pegasus **source list** (a file with a `"sources": [...]` list) has no games in it, it names other catalogs. Adding a source list adds every catalog it names, turned on or off as the list says.
+
+### The default catalog
+
+[evoX-CoreOS](https://github.com/nexgen999/evoX-CoreOS) by nexgen999 is on from the start: homebrew apps and community utilities. Turn it off or remove it in **Settings → Catalogs**; a removed catalog does not come back.
 
 ### Make your own catalog
 
@@ -114,6 +122,8 @@ A complete entry, with a second mirror:
 | `format` | | `exfat`, `ffpkg`, `ffpfs`, `ffpfsc`, `fpkg` or `pkg`. Shown on the game page. When a game is listed in several formats, exFAT is offered first. The installer finds the real type by itself. |
 | `size` | | Download size, like `"52GB"` or `"700 MB"`. Used for **Quick downloads** and for the free space warning. |
 | `region`, `firmware`, `version` | | Shown on the game page. `firmware` is the minimum firmware, like `"4.xx"`. |
+| `description` | | A few lines shown on the game page. |
+| `cover` | | Address of a cover image, used when the PlayStation Store has none (homebrew). |
 | `password` | | The archive's password. |
 | `source_sets` | | Alternative mirrors: `[{"host": "...", "files": [...]}]`. They are tried in order, and when one fails the next one is used. Put the first mirror's files in `files` too. `host` tells the library which mirrors need a CAPTCHA or an account. |
 | `id` | | Your own ID for the entry, unique within the catalog. |
@@ -133,7 +143,8 @@ What a download can be:
 ## Troubleshooting
 
 - **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
-- **"No catalog answered at that address".** Open the address in a browser on your PC. You should see JSON that starts with `{"entries": [`. If you see a web page, use the direct file address (on GitHub, the [Raw](#catalogs-on-github) one). If the catalog has a key, check the key. Catalogs made for other apps, like Pegasus DL, don't work.
+- **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
+- **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **A game shows "Needs an account".** All its mirrors are CAPTCHA hosts. Add a TorBox account or a premium key in **Settings → Download accounts**.
 
@@ -144,6 +155,8 @@ Made by **deox**.
 Shout-outs:
 - **Pippo26442999**
 - **[ps5upload](https://github.com/phantomptr/ps5upload)** by phantomptr. PS5 Library's package installer is built on it.
+- **[Pegasus DL](https://github.com/pegasus-ps5/pegasus-dl)**. Its catalogs work in PS5 Library too.
+- [evoX-CoreOS](https://github.com/nexgen999/evoX-CoreOS) by nexgen999, the default homebrew catalog
 - [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus) by drakmor
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ps5-payload-sdk](https://github.com/ps5-payload-dev/sdk) by John Törnblom
