@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/icon.png" width="128" alt="PS5 Library"></p>
 <h1 align="center">PS5 Library</h1>
-<p align="center"><b>A game library for jailbroken PS5.</b><br>Pick a game, press <b>Download&nbsp;&amp;&nbsp;Install</b>, play it from your home screen.</p>
+<p align="center"><b>A game library for jailbroken PS5.</b><br>Pick a game, verify its download on your PS5, play it from your home screen.</p>
 
 <p align="center">
   <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/deox1111/ps5-library?label=release&color=3d7bff" alt="Latest release"></a>
@@ -18,7 +18,7 @@
 
 - **One payload.** `ps5-library.elf` adds a **PS5 Library** tile to your home screen. The tile opens the library in the PS5 browser.
 - **Feels like the console.** The game you select fills the screen, rows of games sit underneath, and every game has a full-screen page.
-- **One button.** The console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
+- **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
@@ -31,7 +31,7 @@
 
 ## Downloads that need a browser
 
-Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. **Solve CAPTCHA** is on the game page (next to **Download & Install** when some mirrors need a browser) and on a failed download whose hosts showed a CAPTCHA or a web page instead of the file. For multipart downloads, the library opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
+Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. Every catalog host uses this path, including cached Link-Vault mirrors and hosts that sometimes work without a CAPTCHA. The Store, game page and individual versions no longer guess availability from the host's name. If the selected URL already serves a real file, the library verifies it and queues it directly. For multipart downloads, it opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
 
 ![Open a download host on PS5](docs/browser.jpg)
 
@@ -156,12 +156,12 @@ A complete entry, with a second mirror:
 | `description` | | A few lines shown on the game page. |
 | `cover` | | Address of a cover image, used when the PlayStation Store has none (homebrew). |
 | `password` | | The archive's password. |
-| `source_sets` | | Alternative mirrors: `[{"host": "...", "files": [...]}]`. They are tried in order, and when one fails the next one is used. Put the first mirror's files in `files` too. `host` tells the library which mirrors need a CAPTCHA or an account. |
+| `source_sets` | | Alternative mirrors: `[{"host": "...", "files": [...]}]`. Put the first mirror's files in `files` too. Choose a mirror in **Solve CAPTCHA**; `host` labels it, and does not mark it as CAPTCHA-free. API downloads can still try mirrors in order. |
 | `id` | | Your own ID for the entry, unique within the catalog. |
 
 What a download can be:
 - A `.pkg`, an exFAT/FFPKG/FFPFS image, or an archive with one of them inside (`.7z`, `.zip`, `.rar`, `.tar`).
-- Direct download links work best. Pages of some file hosts work too. For a CAPTCHA, use **Solve CAPTCHA**, or configure a supported account in **Settings → Download accounts**.
+- Direct download links and host pages use **Solve CAPTCHA → Open on PS5**. Direct files are checked automatically; pages open for verification. Download accounts remain available for API and existing queue downloads.
 
 ## Screenshots
 
@@ -182,7 +182,8 @@ What a download can be:
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
-- **A game shows "Needs a CAPTCHA".** Choose **Solve CAPTCHA → Open on PS5**, or add a supported TorBox account or premium key in **Settings → Download accounts**.
+- **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is the default for every host; a configured account or a different mirror does not bypass that menu.
+- **A captured link fails with "filename exceeds 200 bytes".** Update to 0.7.11. Long signed URLs could incorrectly be interpreted as filenames even when the browser supplied the correct name.
 - **A download fails with "returned a web page instead of a file" or "needs a browser CAPTCHA".** The host only gives the file to a browser. Choose **Solve CAPTCHA** on that download. If the captured link doesn't work, pick another mirror.
 
 ## Credits
