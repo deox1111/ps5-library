@@ -31,7 +31,9 @@
 
 ## Downloads that need a browser
 
-Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. Every catalog host uses this path, including cached Link-Vault mirrors and hosts that sometimes work without a CAPTCHA. The Store, game page and individual versions no longer guess availability from the host's name. If the selected URL already serves a real file, the library verifies it and queues it directly. For multipart downloads, it opens the next part in turn and returns to Downloads after collecting the links. You can cancel capture from the library.
+Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, then press its **Download** button. Every catalog host uses this path, including cached Link-Vault mirrors and hosts that sometimes work without a CAPTCHA. The Store, game page and individual versions no longer guess availability from the host's name. If the selected URL already serves a real file, the library verifies it and queues it directly. For multipart downloads, it opens the next part in turn and returns to Downloads after collecting the links.
+
+If you leave the host or get redirected, return to the library and press **Retry** next to **Cancel**. Retry reopens the current page, renews its waiting time and keeps earlier captured parts while the session is active. It also rechecks links that failed verification during that part. After a failed session, Retry starts a fresh attempt with the same game, mirror and drive. Queued downloads are managed in **Downloads**.
 
 ![Open a download host on PS5](docs/browser.jpg)
 
@@ -42,6 +44,19 @@ If a site does not work in the PS5 browser, choose **Use phone or computer**. Us
 For **Link-Vault**, the first attempt briefly opens Link-Vault on the PS5. Complete its verification if asked; the library reads the file list and opens your selected host automatically. Links and filenames are saved on the console, so later attempts go straight to the host. No PC, VPS or Telegram connection is needed.
 
 Browser capture is tested on firmware 13.60 with controlled multipart files, and Link-Vault resolution is tested on the console through to the selected hosting page. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual.
+
+### DataNodes popup ads
+
+DataNodes has two download steps; the first button does not provide the file yet. Some clicks can trigger a third-party popup script. If your PS5 already uses [nanoDNS](https://github.com/drakmor/nanoDNS), add these two rules inside the existing `[overrides]` section of `/data/nanodns/nanodns.ini`, then reload nanoDNS and reopen the hosting page:
+
+```ini
+dcbbwymp1bhlf.cloudfront.net=127.0.0.1
+d3jzhqnvnvdy34.cloudfront.net=127.0.0.1
+```
+
+The console must actually use nanoDNS: in the PS5 connection's manual DNS settings, use nanoDNS's bind address as the primary DNS (normally `127.0.0.1`) and leave the secondary unset (`0.0.0.0`), so another resolver cannot bypass the rules. Fully close the browser before trying again. Keep nanoDNS running while using this DNS setup.
+
+These are the two popup script domains observed on October 7, 2026. Keep the remaining nanoDNS rules; do not block all of `cloudfront.net`. The host's countdown and CAPTCHA still need to be completed. The Library ELF does not install or configure nanoDNS automatically. Ad providers can change their domains, so this is a targeted block, not a universal popup blocker.
 
 ## Requirements
 
