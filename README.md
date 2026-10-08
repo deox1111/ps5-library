@@ -21,6 +21,7 @@
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
+- **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. Hosts without compatible range support use one connection.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
@@ -28,6 +29,14 @@
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
 - **Optional accounts.** A premium key or a TorBox account can download from supported hosts directly.
+
+## Download speed
+
+In **Settings → Download speed**, choose **1, 4 or 8 connections** per file. The default is **4**. Changes apply to the next download or resume; pause and resume an active download to apply them.
+
+Large files can download in parallel when the host provides byte ranges and a stable file identifier (strong ETag). The library checks every part before writing it, preserves pause/resume, and falls back to one connection if the host rejects parallel requests. Downloads shows the number of connections currently in use.
+
+Parallel connections can help when a host limits each connection separately. They cannot increase your connection's capacity or remove a host's account-wide speed limit. Try 4 first; choose 8 if it helps with your host, or 1 for compatibility.
 
 ## Downloads that need a browser
 
@@ -46,6 +55,8 @@ For **Link-Vault**, the first attempt briefly opens Link-Vault on the PS5. Compl
 Browser capture is tested on firmware 13.60 with controlled multipart files, and Link-Vault resolution is tested on the console through to the selected hosting page. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual.
 
 ### DataNodes popup ads
+
+The DNS workaround below is experimental; reliable blocking in the PS5 browser has not been verified. Adblock work is currently deferred.
 
 DataNodes has two download steps; the first button does not provide the file yet. Some clicks can trigger a third-party popup script. If your PS5 already uses [nanoDNS](https://github.com/drakmor/nanoDNS), add these two rules inside the existing `[overrides]` section of `/data/nanodns/nanodns.ini`, then reload nanoDNS and reopen the hosting page:
 
