@@ -44,6 +44,10 @@ Choose **Solve CAPTCHA → Open on PS5**, complete the host's check yourself, th
 
 If you leave the host or get redirected, return to the library and press **Retry** next to **Cancel**. Retry reopens the current page, renews its waiting time and keeps earlier captured parts while the session is active. It also rechecks links that failed verification during that part. After a failed session, Retry starts a fresh attempt with the same game, mirror and drive. Queued downloads are managed in **Downloads**.
 
+If verification cannot run in the console browser, press **Change host or device**. The library stops capture before returning to the mirror selector and **Use phone or computer**. A new attempt starts from the first part.
+
+**WebAssembly verification:** a clean local test on PS5 firmware 13.60 returned `typeof WebAssembly === "undefined"`. The library launches the system browser with its default options and does not disable WebAssembly. A host such as FileDitch that requires it may remain blocked even with ad blocking off. This update provides an alternative path; it does not enable WebAssembly or fix that host's native verification. Use another mirror, or try the existing phone/computer flow on the same network (links bound to browser cookies may still fail).
+
 ![Open a download host on PS5](docs/browser.jpg)
 
 If a site does not work in the PS5 browser, choose **Use phone or computer**. Use the same Wi-Fi as the console, complete verification there, and copy the file's download link into the library.
