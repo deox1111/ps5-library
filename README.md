@@ -35,7 +35,9 @@
 
 In **Settings → Download speed**, choose **1, 4 or 8 connections** per file. The default is **4**. Changes apply to the next download or resume; pause and resume an active download to apply them.
 
-Large files can download in parallel when the host provides byte ranges and a stable file identifier (strong ETag). The library checks every part before writing it, preserves pause/resume, and falls back to one connection if the host rejects parallel requests. Downloads shows the number of connections currently in use.
+Large files can download in parallel when the host provides byte ranges and a stable file identifier (strong ETag). Free connections pick up the next part without waiting for a whole batch. Interrupted parts retry individually; temporary host rate limits reduce concurrency, then the library gradually tries to increase it again after a quiet period. Unsupported or repeatedly refused ranges still fall back safely to one connection.
+
+Downloads shows active versus selected connections (for example **4 / 8**) and explains retries or fallback. The speed readout uses a short moving average. The library still checks every part, preserves pause/resume and bounds its memory use; fewer connections near the end of a file or while waiting for retries are normal.
 
 Parallel connections can help when a host limits each connection separately. They cannot increase your connection's capacity or remove a host's account-wide speed limit. Try 4 first; choose 8 if it helps with your host, or 1 for compatibility.
 
