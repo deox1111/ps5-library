@@ -94,13 +94,17 @@ To reset, delete `/data/ps5-library` and load the ELF again (0.7.8 or newer); th
 
 ## Installation guide: firmware, formats and backports
 
-The guide is available on the game page, in download-source selection and in **Settings**.
+The guide opens expanded on the game page, in download-source selection and in **Settings → Installation guide**. **Settings → Console** also shows the detected console firmware.
+
+On detected PS5 firmware above 11.60, source selection marks identified PS5 FPKG sources as unsupported and asks you to choose a Dump or image instead. A source's own Dump/image label takes precedence over the format of a mixed catalog entry. PS4 and homebrew are excluded from this check. Unknown firmware or source formats are explained rather than guessed; this format check does not verify that every game or backport will run.
 
 - **PS5 firmware above 11.60:** choose a compatible extracted game folder (**Dump**) or a ShadowMountPlus image: `.exfat`, `.ffpkg`, `.ffpfs` or `.ffpfsc`. PS5 game FPKG support is documented through **11.60 inclusive** in [kstuff-lite v1.11](https://github.com/EchoStretch/kstuff-lite/releases/tag/v1.11); support for the payload on newer firmware does not imply support for PS5 fake `.pkg` games there. Guidance checked October 8, 2026.
 - **FPKG and FFPKG are different.** A fake PKG is a `.pkg` installed through the package installer. A `.ffpkg` is a UFS image mounted by ShadowMountPlus. See [ShadowMountPlus's format table](https://github.com/drakmor/ShadowMountPlus/blob/1.7/README.md#current-image-support). The PS5 game FPKG warning is not a blanket restriction on PS4 packages or homebrew.
 - **Choose the right source.** A catalog can put Dump, FPKG, DLC and Backport links under the same game. Read the source label: DLC or backport downloads may contain only an add-on or patch. Install the matching base game first and follow the author's instructions.
 - **Version and backport are separate.** The library shows the game version and, when supplied, the backport revision and target firmware. A listed `4.xx` target is the catalog author's claim, not a verified minimum for every source. A backport may be a separate download; missing metadata is left unspecified.
 - **Installation:** choose a source and drive, complete host verification, and let the library download/extract supported archives. Folders and images are registered with ShadowMountPlus; keep those files on their drive. Compatible `.pkg` files go to the system installer—check the console's installation result.
+
+**Waiting for ShadowMount:** registration is confirmed against the installed source path. Pending registrations stay in **Needs attention**, with the Install step pending; Ready is shown only after confirmation. The library rechecks while running and viewing the queue, including jobs left pending by an earlier version. Use **Retry scan** to ask ShadowMount to rescan existing files without downloading or moving them again. If the scan is deferred because a game is running, close the game and return to the console home screen. Finished entries remain as history until you clear them; removing an installed entry from this list does not uninstall its game.
 
 ## Catalogs
 
