@@ -25,6 +25,7 @@
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
+- **Catalog versions and backports.** Game versions, reported backport revisions/firmware targets, and the original download-source labels stay visible. Dump, FPKG, DLC and Backport links can be distinguished before downloading.
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)).
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
@@ -90,6 +91,16 @@ These are the two popup script domains observed on October 7, 2026. Keep the rem
 To update, load the new ELF. Version 0.7.8 and newer replace whatever version is running (a notification says so) and keep your catalogs, settings, accounts and downloads. A download in progress pauses; **Resume** continues it.
 
 To reset, delete `/data/ps5-library` and load the ELF again (0.7.8 or newer); the running library stops and starts fresh. An update never resets anything.
+
+## Installation guide: firmware, formats and backports
+
+The guide is available on the game page, in download-source selection and in **Settings**.
+
+- **PS5 firmware above 11.60:** choose a compatible extracted game folder (**Dump**) or a ShadowMountPlus image: `.exfat`, `.ffpkg`, `.ffpfs` or `.ffpfsc`. PS5 game FPKG support is documented through **11.60 inclusive** in [kstuff-lite v1.11](https://github.com/EchoStretch/kstuff-lite/releases/tag/v1.11); support for the payload on newer firmware does not imply support for PS5 fake `.pkg` games there. Guidance checked October 8, 2026.
+- **FPKG and FFPKG are different.** A fake PKG is a `.pkg` installed through the package installer. A `.ffpkg` is a UFS image mounted by ShadowMountPlus. See [ShadowMountPlus's format table](https://github.com/drakmor/ShadowMountPlus/blob/1.7/README.md#current-image-support). The PS5 game FPKG warning is not a blanket restriction on PS4 packages or homebrew.
+- **Choose the right source.** A catalog can put Dump, FPKG, DLC and Backport links under the same game. Read the source label: DLC or backport downloads may contain only an add-on or patch. Install the matching base game first and follow the author's instructions.
+- **Version and backport are separate.** The library shows the game version and, when supplied, the backport revision and target firmware. A listed `4.xx` target is the catalog author's claim, not a verified minimum for every source. A backport may be a separate download; missing metadata is left unspecified.
+- **Installation:** choose a source and drive, complete host verification, and let the library download/extract supported archives. Folders and images are registered with ShadowMountPlus; keep those files on their drive. Compatible `.pkg` files go to the system installer—check the console's installation result.
 
 ## Catalogs
 
