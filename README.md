@@ -29,7 +29,7 @@
 - **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)).
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
-- **Optional accounts.** A premium key or a TorBox account can download from supported hosts directly.
+- **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification.
 
 ## Download speed
 
@@ -208,7 +208,8 @@ A complete entry, with a second mirror:
 
 What a download can be:
 - A `.pkg`, an exFAT/FFPKG/FFPFS image, or an archive with one of them inside (`.7z`, `.zip`, `.rar`, `.tar`).
-- Direct download links and host pages use **Solve CAPTCHA → Open on PS5**. Direct files are checked automatically; pages open for verification. Download accounts remain available for API and existing queue downloads.
+- Direct download links and host pages use **Solve CAPTCHA → Open on PS5**. Direct files are checked automatically; pages open for verification.
+- **AllDebrid:** paste your API key in **Settings → Download accounts**. The library checks it, shows your plan and saves the hosts AllDebrid supports for your account. Sources on those hosts get **Download with AllDebrid**: the link is unlocked through the AllDebrid API (delayed links included) and downloads and installs like any other. Expired links are unlocked again; dead links, unsupported hosts, quota and API errors fall back to the normal flow and show AllDebrid's reason in Downloads. The key stays on the console.
 
 ## Screenshots
 
