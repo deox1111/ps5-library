@@ -1,0 +1,14 @@
+{
+  "name": "PS5 Library",
+  "payloads": [
+    {
+      "name": "PS5 Library",
+      "filename": "ps5-library.elf",
+      "url": "https://github.com/deox1111/ps5-library/releases/download/v0.7.22/ps5-library.elf",
+      "description": "A game library for jailbroken PS5: browse your catalogs, verify a download on the console, and the library downloads, unpacks and installs the game. Web UI on port 9999.",
+      "version": "v0.7.22",
+      "category": "Utilities",
+      "checksum": "e4eeabaa0eda1a6ac601b0c7b3dbd9b0821526b7e118eac0e4760c575405f878"
+    }
+  ]
+}

@@ -21,13 +21,15 @@
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
+- **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need and what is left after them and this game. A download that would not fit asks first.
 - **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. With 8 connections a wired console reached a full 1 Gbps line. Hosts without compatible range support use one connection.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Files.** A simple file manager in the top bar for the internal SSD and USB drives: unpack archives, install what you copied over, copy or move between drives, rename, delete. See [Files](#files).
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Catalog versions and backports.** Game versions, reported backport revisions/firmware targets, and the original download-source labels stay visible. Dump, FPKG, DLC and Backport links can be distinguished before downloading.
-- **Any browser.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)).
+- **Phone and computer.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)). Phones get a one-column layout with a tab bar at the bottom. Each device pairs once with a code from the console: see [Phones and computers](#phones-and-computers).
+- **Updates from the library.** **Settings → Updates** finds a new release, checks it and switches to it. See [Update](#update).
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
 - **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification.
@@ -48,7 +50,7 @@ On Wi-Fi, the console's wireless link is often the limit. A cable works best; ot
 
 ## Files
 
-**Files** in the top bar browses the internal SSD (`/data`) and your USB drives. Move with the D-pad: the selected item's details and actions appear on the right.
+**Files** in the top bar browses the internal SSD (`/data`) and your USB drives. Move with the D-pad: the selected item's details and actions appear on the right (on a phone, right below the item you tap).
 
 - **Unpack here** extracts a ZIP, 7z or RAR archive, split sets too (`.7z.001`, `.part1.rar`), into a new folder next to it. The archive stays.
 - **Install** a game image (`.exfat`, `.ffpkg`, `.ffpfs`, `.ffpfsc`), a package, an archive or a game folder you copied over. It goes through the same steps as a download.
@@ -57,6 +59,23 @@ On Wi-Fi, the console's wireless link is often the limit. A cable works best; ot
 - Drive roots, the library's own settings files and the folders of a running job are protected.
 
 **Show in Files** in My games, **Show files** in Downloads and **Browse** in Settings → Downloads open the matching folder.
+
+## Phones and computers
+
+Open `http://<ps5-ip>:9999` in a browser on the same network; **Settings → Devices** on the console shows the address. A phone or computer pairs once before it can use the library. The console's own browser never needs to.
+
+- **Scan the QR code** in **Settings → Devices** on the console. It opens the library and pairs the phone in one step.
+- Or open the address and choose **Show code on PS5**. The console shows a six-digit code in a notification; enter it and choose **Pair**.
+
+A code works once and for five minutes; five wrong codes cancel it. The browser then stays paired. **Settings → Devices** lists every paired phone and computer, and **Remove** locks one out again. The console keeps only a hash of each device's key. To let every device on your network in without pairing, set `"pairing": false` in `/data/ps5-library/config.json` and load the library again.
+
+On a phone the library uses one column, large touch targets and a tab bar along the bottom.
+
+<p align="center">
+  <img src="docs/phone-store.jpg" width="250" alt="Store on a phone">
+  <img src="docs/phone-game.jpg" width="250" alt="Game page on a phone, with the free space before downloading">
+  <img src="docs/phone-downloads.jpg" width="250" alt="Downloads on a phone">
+</p>
 
 ## Downloads that need a browser
 
@@ -72,7 +91,7 @@ If verification cannot run in the console browser, press **Change host or device
 
 If a site does not work in the PS5 browser, choose **Use phone or computer**. Use the same Wi-Fi as the console, complete verification there, and copy the file's download link into the library.
 
-![Phone or computer fallback](docs/browser-phone.jpg)
+<p align="center"><img src="docs/browser-phone.jpg" width="300" alt="Phone or computer fallback"></p>
 
 For **Link-Vault**, the first attempt briefly opens Link-Vault on the PS5. Complete its verification if asked; the library reads the file list and opens your selected host automatically. Links and filenames are saved on the console, so later attempts go straight to the host. No PC, VPS or Telegram connection is needed.
 
@@ -96,7 +115,7 @@ These are the two popup script domains observed on October 7, 2026. Keep the rem
 ## Requirements
 
 - A jailbroken PS5 with an ELF loader. Tested on firmware 13.60.
-- Free space: an archive (7z, rar, zip) and its **full unpacked contents** must fit together during installation. Highly compressed archives can expand to much more than twice the download size. The library makes an estimate before downloading and checks available space for each file during extraction. The downloaded archive is deleted after a successful install.
+- Free space: an archive (7z, rar, zip) and its **full unpacked contents** must fit together during installation. Highly compressed archives can expand to much more than twice the download size. The game page shows the space free now, what unfinished downloads on that drive still need and what is left after them and this game; a download that would not fit asks for confirmation. The library checks again before downloading and for each file during extraction. The downloaded archive is deleted after a successful install.
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus). With 1.7beta4 or newer, **My games** also lists games installed from PKG files, PS4 games included.
 
@@ -107,7 +126,15 @@ These are the two popup script domains observed on October 7, 2026. Keep the rem
 3. A notification says **PS5 Library added to the home screen**. Open the tile.
 4. The homebrew catalog [evoX-CoreOS](#the-default-catalog) is already on. Add more in **Settings → Catalogs**, see [Catalogs](#catalogs) below.
 
-To update, load the new ELF. Version 0.7.8 and newer replace whatever version is running (a notification says so) and keep your catalogs, settings, accounts and downloads. A download in progress pauses; **Resume** continues it.
+### Update
+
+**Settings → Updates** (0.7.22 or newer) shows the running version and the latest release on GitHub, with what is new. The library checks shortly after it starts and twice a day, and shows a notification once per new version. Nothing installs on its own; automatic checks can be turned off there.
+
+**Install** downloads `ps5-library.elf` and checks it against the release's SHA-256 file. A file that does not match replaces nothing. Then it writes the new version over every copy of PS5 Library that your console starts: the file your payload manager or autoloader loads at boot (Payload Manager, etaHEN or another payload folder, the root of a USB drive) and the library's own copy in `/data/ps5-library`. That way the next start loads the new version too. A file only counts as a copy when it is named `ps5-library….elf` and contains this library; other payloads are never touched. The new version then starts and takes over. Catalogs, settings, accounts, paired devices and downloads stay; a download in progress pauses and **Resume** continues it. While a package is installing, wait until it finishes.
+
+Payload Manager can list PS5 Library too: in its **Settings → Manage Sources → Add Source**, add `https://raw.githubusercontent.com/deox1111/ps5-library/main/payloads.json`.
+
+To update by hand, load the new ELF. Version 0.7.8 and newer replace whatever version is running (a notification says so) and keep your catalogs, settings, accounts and downloads. A download in progress pauses; **Resume** continues it.
 
 To reset, delete `/data/ps5-library` and load the ELF again (0.7.8 or newer); the running library stops and starts fresh. An update never resets anything.
 
@@ -235,10 +262,14 @@ What a download can be:
 | ![Game page](docs/game.jpg) | ![Browse](docs/browse.jpg) |
 | **Downloads** | **Settings → Catalogs** |
 | ![Downloads](docs/downloads.jpg) | ![Settings → Catalogs](docs/catalogs.jpg) |
+| **Settings → Devices** | **Settings → Updates** |
+| ![Settings → Devices](docs/devices.jpg) | ![Settings → Updates](docs/updates.jpg) |
 
 ## Troubleshooting
 
 - **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. Since 0.7.21 a notification says when the library is active again. If the console or loader terminates the whole process, the payload still needs to be loaded again.
+- **A phone or computer shows "Pair this device".** Since 0.7.22 every phone and computer pairs once. Scan the QR code in **Settings → Devices** on the console, or choose **Show code on PS5** and enter the code from the notification. A private browser window forgets the pairing when it closes.
+- **An update was saved but did not start.** No ELF loader or Payload Manager answered on the console. The saved copies already hold the new version: load `ps5-library.elf` from your payload manager.
 - **Downloads are much slower than on a computer.** Update to 0.7.21 and use 4 or 8 connections. The line under the download shows the speed of each connection. If the total stays near your Wi-Fi speed, the console's wireless link is the limit: see [Download speed](#download-speed).
 - **The tile opens an empty page on startup.** Make sure the payload is running. Load it, or add it to autoload.
 - **Can the library go full screen?** No. The PS5 browser has no full-screen mode for web pages; its bars stay on screen. The library uses a denser layout in that window instead.
