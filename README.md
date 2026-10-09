@@ -79,7 +79,7 @@ These are the two popup script domains observed on October 7, 2026. Keep the rem
 ## Requirements
 
 - A jailbroken PS5 with an ELF loader. Tested on firmware 13.60.
-- Free space: a game packed as an archive (7z, rar, zip) needs about **twice its size** free while it installs, because the archive and the unpacked game are on the drive together. The archive is deleted after the install. The library checks the space before it downloads.
+- Free space: an archive (7z, rar, zip) and its **full unpacked contents** must fit together during installation. Highly compressed archives can expand to much more than twice the download size. The library makes an estimate before downloading and checks available space for each file during extraction. The downloaded archive is deleted after a successful install.
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus). With 1.7beta4 or newer, **My games** also lists games installed from PKG files, PS4 games included.
 
@@ -220,12 +220,14 @@ What a download can be:
 
 ## Troubleshooting
 
-- **The tile opens an empty page.** The payload isn't running. Load it again, or add it to autoload.
+- **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. If the console or loader terminates the whole process, the payload still needs to be loaded again.
+- **The tile opens an empty page on startup.** Make sure the payload is running. Load it, or add it to autoload.
 - **Covers are black in the PS5 browser.** Older firmware browsers (for example 5.10) could not place the cover images before 0.7.8. Update.
 - **"PS5 Library is already running".** The same version already runs, so the new launch exits. A different version replaces it (0.7.8 or newer).
 - **Another payload uses port 9999.** PS5 Library moves to port **19999** (then 29999) and says so in a notification. It stays on that port on later launches, and the home screen tile follows it. On your phone or PC, open `http://<ps5-ip>:19999`. To pick the port yourself, set `"port"` in `/data/ps5-library/config.json`.
 - **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
-- **"Not enough free space".** The message says how much the game needs. Free up space, or pick another drive on the game page (**Change drive**).
+- **"Not enough free space" while unpacking.** The message identifies the current file and its required/available space, not the total for the whole archive. Free space, then choose **Try again**; unpacking restarts from the saved archive. If even the error cannot be saved on a full disk, it stays visible in the running library but may not survive a payload restart.
+- **Unpacking appears stuck.** Version 0.7.18 shows the current file, written bytes and a notice after a longer period without new output. An unknown archive total is not shown as a percentage. A pause or error remains on the **Unpack** step; retrying extraction starts it again rather than resuming inside the compressed stream.
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
