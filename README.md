@@ -17,12 +17,13 @@
 ## Features
 
 - **One payload.** `ps5-library.elf` adds a **PS5 Library** tile to your home screen. The tile opens the library in the PS5 browser.
-- **Feels like the console.** The game you select fills the screen, rows of games sit underneath, and every game has a full-screen page.
+- **Feels like the console.** The game you select fills the screen, rows of games sit underneath, and every game has a full-screen page. The layout gets denser in the PS5 browser's window, so more of the library fits.
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
 - **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. Hosts without compatible range support use one connection.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
+- **Files.** A simple file manager in the top bar for the internal SSD and USB drives: unpack archives, install what you copied over, copy or move between drives, rename, delete. See [Files](#files).
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Catalog versions and backports.** Game versions, reported backport revisions/firmware targets, and the original download-source labels stay visible. Dump, FPKG, DLC and Backport links can be distinguished before downloading.
@@ -40,6 +41,18 @@ Large files can download in parallel when the host provides byte ranges and a st
 Downloads shows active versus selected connections (for example **4 / 8**) and explains retries or fallback. The speed readout uses a short moving average. The library still checks every part, preserves pause/resume and bounds its memory use; fewer connections near the end of a file or while waiting for retries are normal.
 
 Parallel connections can help when a host limits each connection separately. They cannot increase your connection's capacity or remove a host's account-wide speed limit. Try 4 first; choose 8 if it helps with your host, or 1 for compatibility.
+
+## Files
+
+**Files** in the top bar browses the internal SSD (`/data`) and your USB drives. Move with the D-pad: the selected item's details and actions appear on the right.
+
+- **Unpack here** extracts a ZIP, 7z or RAR archive, split sets too (`.7z.001`, `.part1.rar`), into a new folder next to it. The archive stays.
+- **Install** a game image (`.exfat`, `.ffpkg`, `.ffpfs`, `.ffpfsc`), a package, an archive or a game folder you copied over. It goes through the same steps as a download.
+- **Copy** or **Move**, open the target folder, then **Paste here**. On the same drive a move is instant; between drives it runs in Downloads with progress, and can be paused or cancelled. The copy only appears once it is complete, and a move deletes the original last.
+- **Rename**, **New folder**, **Delete**, a filter and sorting by name, size or date. On a phone or computer, **Download** saves a file to that device.
+- Drive roots, the library's own settings files and the folders of a running job are protected.
+
+**Show in Files** in My games, **Show files** in Downloads and **Browse** in Settings → Downloads open the matching folder.
 
 ## Downloads that need a browser
 
@@ -223,6 +236,8 @@ What a download can be:
 
 - **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. If the console or loader terminates the whole process, the payload still needs to be loaded again.
 - **The tile opens an empty page on startup.** Make sure the payload is running. Load it, or add it to autoload.
+- **Can the library go full screen?** No. The PS5 browser has no full-screen mode for web pages; its bars stay on screen. The library uses a denser layout in that window instead.
+- **A "?" appears instead of a symbol.** Update to 0.7.20. The console's fonts lack some symbols (such as the Cross button sign); they are drawn as icons now.
 - **Covers are black in the PS5 browser.** Older firmware browsers (for example 5.10) could not place the cover images before 0.7.8. Update.
 - **"PS5 Library is already running".** The same version already runs, so the new launch exits. A different version replaces it (0.7.8 or newer).
 - **Another payload uses port 9999.** PS5 Library moves to port **19999** (then 29999) and says so in a notification. It stays on that port on later launches, and the home screen tile follows it. On your phone or PC, open `http://<ps5-ip>:19999`. To pick the port yourself, set `"port"` in `/data/ps5-library/config.json`.
@@ -232,7 +247,7 @@ What a download can be:
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
-- **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is the default for every host; a configured account or a different mirror does not bypass that menu.
+- **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is available for every host. A saved account (AllDebrid, TorBox or a host's premium key) that supports the host also offers **Download with** that account.
 - **A captured link fails with "filename exceeds 200 bytes".** Update to 0.7.11. Long signed URLs could incorrectly be interpreted as filenames even when the browser supplied the correct name.
 - **A download fails with "returned a web page instead of a file" or "needs a browser CAPTCHA".** The host only gives the file to a browser. Choose **Solve CAPTCHA** on that download. If the captured link doesn't work, pick another mirror.
 
