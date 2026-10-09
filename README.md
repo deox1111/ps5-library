@@ -21,7 +21,7 @@
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
-- **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. Hosts without compatible range support use one connection.
+- **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. With 8 connections a wired console reached a full 1 Gbps line. Hosts without compatible range support use one connection.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Files.** A simple file manager in the top bar for the internal SSD and USB drives: unpack archives, install what you copied over, copy or move between drives, rename, delete. See [Files](#files).
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
@@ -40,7 +40,11 @@ Large files can download in parallel when the host provides byte ranges and a st
 
 Downloads shows active versus selected connections (for example **4 / 8**) and explains retries or fallback. The speed readout uses a short moving average. The library still checks every part, preserves pause/resume and bounds its memory use; fewer connections near the end of a file or while waiting for retries are normal.
 
+Since 0.7.21, each connection asks the console for a 512 KiB TCP receive buffer (the console's default of 64 KiB limited every connection to roughly 1–6 MB/s), finished parts are written on their own thread, an idle connection takes over half of a part that holds the others up, and a connection that stops delivering for 3 seconds is replaced. A line under a running download shows each connection's speed, storage load, read-ahead use and these takeovers.
+
 Parallel connections can help when a host limits each connection separately. They cannot increase your connection's capacity or remove a host's account-wide speed limit. Try 4 first; choose 8 if it helps with your host, or 1 for compatibility.
+
+On Wi-Fi, the console's wireless link is often the limit. A cable works best; otherwise use the 5 GHz band (**Settings → Network → Settings → Set Up Internet Connection**, press **Options** on your network, **Wi-Fi Frequency Bands → 5 GHz**).
 
 ## Files
 
@@ -234,7 +238,8 @@ What a download can be:
 
 ## Troubleshooting
 
-- **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. If the console or loader terminates the whole process, the payload still needs to be loaded again.
+- **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. Since 0.7.21 a notification says when the library is active again. If the console or loader terminates the whole process, the payload still needs to be loaded again.
+- **Downloads are much slower than on a computer.** Update to 0.7.21 and use 4 or 8 connections. The line under the download shows the speed of each connection. If the total stays near your Wi-Fi speed, the console's wireless link is the limit: see [Download speed](#download-speed).
 - **The tile opens an empty page on startup.** Make sure the payload is running. Load it, or add it to autoload.
 - **Can the library go full screen?** No. The PS5 browser has no full-screen mode for web pages; its bars stay on screen. The library uses a denser layout in that window instead.
 - **A "?" appears instead of a symbol.** Update to 0.7.20. The console's fonts lack some symbols (such as the Cross button sign); they are drawn as icons now.
@@ -246,6 +251,7 @@ What a download can be:
 - **Unpacking appears stuck.** Version 0.7.18 shows the current file, written bytes and a notice after a longer period without new output. An unknown archive total is not shown as a percentage. A pause or error remains on the **Unpack** step; retrying extraction starts it again rather than resuming inside the compressed stream.
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
+- **ShadowMountPlus reports failed installs, or a game stays at "Waiting for ShadowMount registration".** A ShadowMountPlus that has run for a long time can stop registering new games. Choose **Restart ShadowMount** on that download (0.7.21); close any game that runs from an image or game folder first. If the library can't find the ShadowMountPlus file, set `"shadowmount_elf"` in `/data/ps5-library/config.json` or restart ShadowMountPlus from your payload manager.
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
 - **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is available for every host. A saved account (AllDebrid, TorBox or a host's premium key) that supports the host also offers **Download with** that account.
 - **A captured link fails with "filename exceeds 200 bytes".** Update to 0.7.11. Long signed URLs could incorrectly be interpreted as filenames even when the browser supplied the correct name.
