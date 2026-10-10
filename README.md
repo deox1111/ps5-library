@@ -22,14 +22,18 @@
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
 - **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need and what is left after them and this game. A download that would not fit asks first.
+- **Queue in your order.** **Downloads** has Active, Finished, Failed and Cancelled tabs. A waiting download can move up, move down or go next, and finished, failed or cancelled downloads clear in one go.
+- **Favourites.** The heart on a game page adds it to your favourites: they get their own row in the Store and a filter in **Browse**. The list is kept on the console, so the console and your phone share it.
 - **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. With 8 connections a wired console reached a full 1 Gbps line. Hosts without compatible range support use one connection.
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Files.** A simple file manager in the top bar for the internal SSD and USB drives: unpack archives, install what you copied over, copy or move between drives, rename, delete. See [Files](#files).
 - **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
+- **Browse by region and size.** Filter by region and size, and sort by size. The region comes from the catalog, or from the tags in its description.
 - **Catalog versions and backports.** Game versions, reported backport revisions/firmware targets, and the original download-source labels stay visible. Dump, FPKG, DLC and Backport links can be distinguished before downloading.
 - **Phone and computer.** Open `http://<ps5-ip>:9999` on your phone or PC to queue games from the couch (19999 if [another payload uses 9999](#troubleshooting)). Phones get a one-column layout with a tab bar at the bottom. Each device pairs once with a code from the console: see [Phones and computers](#phones-and-computers).
 - **Updates from the library.** **Settings → Updates** finds a new release, checks it and switches to it. See [Update](#update).
+- **Diagnostic report.** **Settings → Console → Diagnostic report** collects what a bug report needs, without keys, passwords, catalog addresses or download links.
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
 - **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification.
@@ -267,6 +271,7 @@ What a download can be:
 
 ## Troubleshooting
 
+- **Reporting a problem.** Attach the report from **Settings → Console → Diagnostic report** (0.7.24 or newer): **Copy** it on a phone or computer, or save it on the console as `diagnostics.txt` in the library's folder. Read it before you share it; download links in it are cut down to their host.
 - **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. Since 0.7.21 a notification says when the library is active again. If the console or loader terminates the whole process, the payload still needs to be loaded again.
 - **A phone or computer shows "Pair this device".** Since 0.7.22 every phone and computer pairs once. Scan the QR code in **Settings → Devices** on the console, or choose **Show code on PS5** and enter the code from the notification. A private browser window forgets the pairing when it closes.
 - **An update was saved but did not start.** No ELF loader or Payload Manager answered on the console. The saved copies already hold the new version: load `ps5-library.elf` from your payload manager.
