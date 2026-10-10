@@ -21,7 +21,8 @@
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
-- **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need and what is left after them and this game. A download that would not fit asks first.
+- **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need (and which downloads that is) and what is left after them and this game. An archive counts with its unpacked size when the catalog gives one. A download that would not fit asks first.
+- **Storage overview.** **Settings → Storage** lists the library's folders on every drive with paths and sizes, shows what games and running downloads still use, and deletes what nothing needs after showing what goes. See [Storage](#storage).
 - **Queue in your order.** **Downloads** has Active, Finished, Failed and Cancelled tabs. A waiting download can move up, move down or go next, and finished, failed or cancelled downloads clear in one go.
 - **Favourites.** The heart on a game page adds it to your favourites: they get their own row in the Store and a filter in **Browse**. The list is kept on the console, so the console and your phone share it.
 - **Parallel downloads.** Up to 4 connections per file by default; choose 1, 4 or 8 in Settings. With 8 connections a wired console reached a full 1 Gbps line. Hosts without compatible range support use one connection.
@@ -63,6 +64,34 @@ On Wi-Fi, the console's wireless link is often the limit. A cable works best; ot
 - Drive roots, the library's own settings files and the folders of a running job are protected.
 
 **Show in Files** in My games, **Show files** in Downloads and **Browse** in Settings → Downloads open the matching folder.
+
+## Storage
+
+Where PS5 Library keeps files:
+
+- **Downloads** go to `ps5-library/downloads/<download>` and archives are unpacked into `ps5-library/library/<download>`, on the drive the game installs to (on the internal SSD: `/data/ps5-library/downloads` and `/data/ps5-library/library`).
+- **Games installed from folders and images** stay in ShadowMountPlus's scan folder: `/data/homebrew` on the internal SSD, the drive itself or its `homebrew` folder on a USB drive. Packages are installed into the console's own storage.
+- The PS5's **Storage** screen counts the library's folders and the folder and image games as **Other**.
+
+What happens to the files:
+
+| Action | Download folder | Unpacked folder | Installed game and saves |
+|---|---|---|---|
+| Install finishes | Deleted; a package's file once the console has installed it (0.7.27) | Rest deleted (0.7.26; **Settings → Downloads → Backports** can keep it) | Installed |
+| **Pause** | Kept; **Resume** continues | Kept | – |
+| **Cancel** | Partial files kept, so **Resume** can continue | Kept | – |
+| **Remove**, **Clear** | Deleted, except a Download only file | Deleted (0.7.27; before, it stayed) | Kept |
+| **Delete** in Files | Exactly what you select | Exactly what you select | Only if you select it |
+| **Unpack here** in Files | The archive stays | New folder next to it | – |
+
+**Settings → Storage** (0.7.27) shows every drive's library folders with path, size, download and state:
+
+- **Can be deleted:** nothing uses it. Left by an earlier version or a removed download, a cancelled download's partial files, or what an install left. Selected when the page opens.
+- **Your choice:** a failed download (**Try again** continues from it) or a Download only file.
+- **Kept:** a paused download. Cancel it first.
+- **In use:** a game ShadowMountPlus has registered or mounts from there, an entry of its manual list, or a running download. Never deleted.
+
+**Delete selected** lists what goes and how much space it frees. The library checks every folder again before it deletes it, and it needs ShadowMountPlus running to see what games use; without it nothing is deleted. Remove and Clear keep the unpacked folder in that case. The page also lists the installed games on each drive with their paths (delete those in **Manage**) and what unfinished downloads still need. The diagnostic report includes the same summary and the last clean-up.
 
 ## Phones and computers
 
@@ -271,6 +300,7 @@ What a download can be:
 
 ## Troubleshooting
 
+- **The PS5 shows much more under "Other" than your games.** Open **Settings → Storage**: it lists the library's downloads and unpacked folders on every drive with their sizes, and what can be deleted. Before 0.7.27, **Remove** and **Clear** left the unpacked folder, and a package's file stayed after its install. See [Storage](#storage).
 - **Reporting a problem.** Attach the report from **Settings → Console → Diagnostic report** (0.7.24 or newer): **Copy** it on a phone or computer, or save it on the console as `diagnostics.txt` in the library's folder. Read it before you share it; download links in it are cut down to their host.
 - **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. Since 0.7.21 a notification says when the library is active again. If the console or loader terminates the whole process, the payload still needs to be loaded again.
 - **A phone or computer shows "Pair this device".** Since 0.7.22 every phone and computer pairs once. Scan the QR code in **Settings → Devices** on the console, or choose **Show code on PS5** and enter the code from the notification. A private browser window forgets the pairing when it closes.
