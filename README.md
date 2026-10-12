@@ -21,7 +21,10 @@
 - **Install from the console.** After you complete the host's verification, the console downloads, unpacks and installs the game. When it's done, the game is on your home screen.
 - **Internal SSD or USB.** Pick a drive per game, or set a default. Games in exFAT/FFPKG format run from that drive through ShadowMountPlus. PKG games go through the system installer.
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
-- **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need (and which downloads that is) and what is left after them and this game. An archive counts with its unpacked size when the catalog gives one. A download that would not fit asks first.
+- **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need (and which downloads that is) and what is left after them and this game. An archive counts with its unpacked size when the catalog gives one. A download that would not fit asks first. The console checks again with the file's real size once the host sends it, so a catalog that lists the unpacked size as the download's does not block a game that fits.
+- **Download while unpacking.** While one game unpacks or installs, the next one in the queue downloads, then unpacks in its turn. One game downloads and one unpacks at a time; **Settings → Downloads → While a game unpacks** can switch it off.
+- **Notifications.** A PS5 notification says when a game is ready to play, a download failed or ShadowMountPlus could not add a game, even with the library closed. **Settings → Downloads → Notifications** turns them off.
+- **Newer versions.** With ShadowMountPlus 1.7beta5 or later, **My games** shows each game's version and marks a game when your catalogs have a newer one.
 - **Storage overview.** **Settings → Storage** lists the library's folders on every drive with paths and sizes, shows what games and running downloads still use, and deletes what nothing needs after showing what goes. See [Storage](#storage).
 - **Queue in your order.** **Downloads** has Active, Finished, Failed and Cancelled tabs. A waiting download can move up, move down or go next, and finished, failed or cancelled downloads clear in one go.
 - **Favourites.** The heart on a game page adds it to your favourites: they get their own row in the Store and a filter in **Browse**. The list is kept on the console, so the console and your phone share it.
@@ -37,7 +40,7 @@
 - **Diagnostic report.** **Settings → Console → Diagnostic report** collects what a bug report needs, without keys, passwords, catalog addresses or download links.
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
-- **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification.
+- **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification. For a Link-Vault source the PS5 reads Link-Vault first, then the account takes the host's link (0.7.28). See [Download accounts](#download-accounts).
 
 ## Download speed
 
@@ -84,6 +87,8 @@ What happens to the files:
 | **Delete** in Files | Exactly what you select | Exactly what you select | Only if you select it |
 | **Unpack here** in Files | The archive stays | New folder next to it | – |
 
+A cancelled download keeps its partial files so **Resume** can continue. **Settings → Storage → Cancelled downloads** can delete them after 7 or 30 days (0.7.28, off by default); the download stays in the list and **Resume** starts it again. **Select cancelled downloads** selects all their folders for **Delete selected**.
+
 **Settings → Storage** (0.7.27) shows every drive's library folders with path, size, download and state:
 
 - **Can be deleted:** nothing uses it. Left by an earlier version or a removed download, a cancelled download's partial files, or what an install left. Selected when the page opens.
@@ -129,6 +134,15 @@ If a site does not work in the PS5 browser, choose **Use phone or computer**. Us
 For **Link-Vault**, the first attempt briefly opens Link-Vault on the PS5. Complete its verification if asked; the library reads the file list and opens your selected host automatically. Links and filenames are saved on the console, so later attempts go straight to the host. No PC, VPS or Telegram connection is needed.
 
 Browser capture is tested on firmware 13.60 with controlled multipart files, and Link-Vault resolution is tested on the console through to the selected hosting page. Compatibility varies by host; links requiring browser cookies or a different browser may not work. CAPTCHA verification is manual.
+
+### Download accounts
+
+Save a key in **Settings → Accounts**: AllDebrid, TorBox, or a host's premium key (FileKeeper, DataNodes, DataVaults). A source whose host the account supports then offers **Download with** that account, without the host's verification. AllDebrid supports the hosts listed for your account (1fichier, MEGA, Rapidgator and others); TorBox supports DataNodes, DataVaults and VikingFile.
+
+- **Link-Vault sources** (0.7.28): when Link-Vault names a host the account supports (such as "Dump - DataNodes"), **Download with TorBox** opens Link-Vault on the PS5. Complete its verification; the library then sends the host's link to TorBox and the download continues in **Downloads**. The host's own page does not open. The link is saved, so the next time goes straight to TorBox.
+- **The account is the only route** (0.7.28). If the account refuses the link or cannot fetch the file, the download stops with the account's own message. **Try again** asks the account again; **Download from the host instead** starts the host's normal download with its verification.
+- While TorBox fetches the file to its own servers, the download shows "TorBox is fetching from … · N%"; then the console downloads it from TorBox.
+- Keys stay in the library's `settings.json` on the console. They are not in the diagnostic report or the log.
 
 ### DataNodes popup ads
 
@@ -315,13 +329,16 @@ What a download can be:
 - **"No catalog answered at that address".** Open the address in a browser on your PC. If the browser can't open it either, the catalog is offline or the address is wrong. If the catalog has a key, check the key.
 - **"Not enough free space" while unpacking.** The message identifies the current file and its required/available space, not the total for the whole archive. Free space, then choose **Try again**; unpacking restarts from the saved archive. If even the error cannot be saved on a full disk, it stays visible in the running library but may not survive a payload restart.
 - **Unpacking appears stuck.** Version 0.7.18 shows the current file, written bytes and a notice after a longer period without new output. An unknown archive total is not shown as a percentage. A pause or error remains on the **Unpack** step; retrying extraction starts it again rather than resuming inside the compressed stream. If unpacking finished and a later step failed, **Try again** continues from the unpacked files (0.7.23 or newer).
-- **Unpacking is slow.** From 0.7.23 the download card shows how fast the game is written and the archive read, files per second, and whether the decoder (the console's CPU) or storage sets the pace. Strongly compressed archives are limited by the CPU; games made of many small files are limited by how fast the console's storage creates files.
+- **Unpacking is slow.** From 0.7.23 the download card shows how fast the game is written and the archive read, files per second, and whether the decoder (the console's CPU) or storage sets the pace. Strongly compressed archives are limited by the CPU; games made of many small files are limited by how fast the console's storage creates files. From 0.7.28, 7z archives made with 7-Zip's multithreaded compression decode on three threads (about twice as fast on a strongly compressed test archive); the card then says "Waiting for 3 decoding threads". `"unpack_threads"` in `/data/ps5-library/config.json` sets the number (1 turns it off). The PS5 browser shares the CPU: on the home screen a test archive unpacked about 15% faster than with the library open, and a notification says when the game is ready.
+- **"archive contains an invalid path" for a game with Japanese or accented file names.** Update to 0.7.28; such names unpack now.
 - **"Directory scan limit exceeded" after unpacking.** Versions before 0.7.23 listed every file of the unpacked game and stopped at 100,000 files. Update, then choose **Try again**; a game unpacked by an older version is unpacked once more.
 - **"That address returns a web page, not a catalog".** Use the direct file address. On GitHub, use the [Raw](#catalogs-on-github) one.
 - **"ShadowMountPlus is not running".** Start ShadowMountPlus, for example through your autoloader.
 - **ShadowMountPlus reports failed installs, or a game stays at "Waiting for ShadowMount registration".** Before 1.7beta5, ShadowMountPlus could lose its install hook after a game launch or Rest Mode ([drakmor/ShadowMountPlus#145](https://github.com/drakmor/ShadowMountPlus/issues/145), [#147](https://github.com/drakmor/ShadowMountPlus/issues/147)); its log then says "internal AppInstallTitleDir bridge unavailable" and no new game registers until it restarts. **Update ShadowMountPlus to 1.7beta5 or later**: it repairs the hook by itself. With an older version, choose **Restart ShadowMount** on that download (0.7.21); close any game that runs from an image or game folder first. From 0.7.25 the download shows this within seconds of ShadowMountPlus's attempt.
 - **A backport folder stayed in `ps5-library/library`.** From 0.7.26 the backport for your firmware goes to ShadowMountPlus's `backports/<title ID>` folder, and none is used for a game your firmware runs. **Settings → Downloads → Backports** chooses between deleting the rest of the unpacked folder (default) and keeping it. Folders left by earlier versions can be deleted in **Files**. If the library can't find the ShadowMountPlus file, set `"shadowmount_elf"` in `/data/ps5-library/config.json` or restart ShadowMountPlus from your payload manager.
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
+- **Download with TorBox opened the host's free download or asked for its CAPTCHA.** Update to 0.7.28. Before, a Link-Vault source never offered TorBox, and a TorBox error fell back to the host's free download. Now **Download with TorBox** reads Link-Vault on the PS5 and hands the host's link to TorBox; if TorBox fails, the download shows TorBox's message and **Download from the host instead** is a separate choice. See [Download accounts](#download-accounts).
+- **"Not enough free space" before a download although the game fits.** Update to 0.7.28. Some catalogs list the unpacked game's size as the download's, and the check counted it twice. Now it counts only what is certain until the host sends the file's real size.
 - **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is available for every host. Files from GitHub releases show **Direct download** and a **Download** button instead. A saved account (AllDebrid, TorBox or a host's premium key) that supports the host also offers **Download with** that account.
 - **A captured link fails with "filename exceeds 200 bytes".** Update to 0.7.11. Long signed URLs could incorrectly be interpreted as filenames even when the browser supplied the correct name.
 - **A download fails with "returned a web page instead of a file" or "needs a browser CAPTCHA".** The host only gives the file to a browser. Choose **Solve CAPTCHA** on that download. If the captured link doesn't work, pick another mirror.
