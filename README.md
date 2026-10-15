@@ -23,6 +23,7 @@
 - **Downloads resume** after a pause, a dropped connection, a failed attempt or a console restart. Partial files are cleaned up after the install.
 - **Room for the queue.** The game page shows the space free on the drive, what unfinished downloads still need (and which downloads that is) and what is left after them and this game. An archive counts with its unpacked size when the catalog gives one. A download that would not fit asks first. The console checks again with the file's real size once the host sends it, so a catalog that lists the unpacked size as the download's does not block a game that fits.
 - **Download while unpacking.** While one game unpacks or installs, the next one in the queue downloads, then unpacks in its turn. One game downloads and one unpacks at a time; **Settings → Downloads → While a game unpacks** can switch it off.
+- **Rest Mode on internal storage.** Downloads and unpacking continue while the console rests, and the console goes to sleep once the work finishes. Adding the game to the home screen waits until you wake it. **USB support in Rest Mode is in progress:** see [Rest Mode](#rest-mode).
 - **Notifications.** A PS5 notification says when a game is ready to play, a download failed or ShadowMountPlus could not add a game, even with the library closed. **Settings → Downloads → Notifications** turns them off.
 - **Newer versions.** With ShadowMountPlus 1.7beta5 or later, **My games** shows each game's version and marks a game when your catalogs have a newer one.
 - **Storage overview.** **Settings → Storage** lists the library's folders on every drive with paths and sizes, shows what games and running downloads still use, and deletes what nothing needs after showing what goes. See [Storage](#storage).
@@ -41,6 +42,19 @@
 - **Browser downloads.** Open a host on your PS5, complete its verification and press Download. The library captures a usable file link and adds it to Downloads. A phone or computer can also supply a download link.
 - **Link-Vault hosts.** The PS5 reads the file list, opens the selected host automatically and remembers its links and filenames, including multipart downloads.
 - **Optional accounts.** An AllDebrid or TorBox account, or a host's premium key, downloads from supported hosts directly: the game page offers **Download with AllDebrid** (or the account you saved) next to the browser verification. For a Link-Vault source the PS5 reads Link-Vault first, then the account takes the host's link (0.7.28). See [Download accounts](#download-accounts).
+
+## Rest Mode
+
+> [!WARNING]
+> **REST MODE CURRENTLY WORKS ONLY ON INTERNAL STORAGE, NOT USB. USB SUPPORT IS IN PROGRESS.** Keep the console awake for USB downloads and unpacking. Setting USB power to **Always** does not prevent the drive from disconnecting in Rest Mode.
+
+From **0.7.29**, **Settings → Downloads → Rest Mode** keeps downloading and unpacking by default. Choose internal storage for the download; for local archives, both the archive and its output must be on internal storage. In the PS5 settings, enable **System → Power Saving → Features Available in Rest Mode → Stay Connected to the Internet**, then enter Rest Mode normally.
+
+While work runs, the library keeps the console's processor active. Once it finishes, the console can enter deep sleep; the library and FTP then stop answering until you wake it. Adding a game through the installer waits until the console wakes up. You can check progress from a paired phone or computer while the console is still working.
+
+Tested on firmware **13.60**: a **5 GiB download** continued uninterrupted for **26 minutes 31 seconds in Rest Mode**, and a separate archive unpacked **6,005 files** on internal storage in **33 seconds**. The console slept after completion and the library answered again after waking without reloading the payload. File sizes and selected hashes matched. Overnight runs and other firmware have not been verified.
+
+**Known USB issue:** the drive can disappear during Rest Mode. After waking, automatic retry can run before the drive reconnects and report **local source does not exist**. Wait until the drive is visible in **Files**, then retry manually. Normal USB use while the console is awake remains supported.
 
 ## Download speed
 
