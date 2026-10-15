@@ -2,6 +2,8 @@
 <h1 align="center">PS5 Library</h1>
 <p align="center"><b>A game library for jailbroken PS5.</b><br>Pick a game, verify its download on your PS5, play it from your home screen.</p>
 
+<p align="center">💬 <a href="https://discord.gg/QUGdCfpeK7"><b>Join the PS5 Library Discord</b></a>: help, release pings and ideas.</p>
+
 <p align="center">
   <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/deox1111/ps5-library?label=release&color=3d7bff" alt="Latest release"></a>
   <a href="../../releases"><img src="https://img.shields.io/github/downloads/deox1111/ps5-library/total?color=3d7bff" alt="Downloads"></a>
@@ -9,7 +11,8 @@
   <img src="https://img.shields.io/badge/platform-PS5-003791?logo=playstation&logoColor=white" alt="Platform: PS5">
   <img src="https://img.shields.io/badge/tested%20on-FW%2013.60-555" alt="Tested on firmware 13.60">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-blue" alt="License: GPL-3.0-or-later"></a>
-  <a href="#donate"><img src="https://img.shields.io/badge/donate-XMR-FF6600?logo=monero&logoColor=white" alt="Donate XMR"></a>
+  <a href="https://discord.gg/QUGdCfpeK7"><img src="https://img.shields.io/badge/discord-join-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="#donate"><img src="https://img.shields.io/badge/donate-BTC%20%7C%20ETH%20%7C%20LTC%20%7C%20SOL%20%7C%20XMR-F7931A?logo=bitcoin&logoColor=white" alt="Donate: BTC, ETH, LTC, SOL, XMR"></a>
 </p>
 
 <p align="center"><img src="docs/store.jpg" alt="Store"></p>
@@ -375,13 +378,39 @@ Shout-outs:
 
 ## Donate
 
-If PS5 Library saves you time, you can support it with Monero (XMR):
+If PS5 Library saves you time, you can support it with any of these:
+
+**Bitcoin (BTC)**
+
+```
+bc1qklrkv3x76662gx5ex5ndcs665ljd0cr2e0jnn8
+```
+
+**Ethereum (ETH)**
+
+```
+0x12b158C4fF55772214C598F8c68bd6f6Acb72981
+```
+
+**Litecoin (LTC)**
+
+```
+ltc1qgyva6rc5p42cz0tds3s88kmsvsmtgexfe98dpw
+```
+
+**Solana (SOL)**
+
+```
+Vd2Ex93oMRm3Wwpvamcf2pV2XnKZzHRYRzvcrp4cEZt
+```
+
+**Monero (XMR)**
 
 ```
 4A66wqfp2Lp1TyBC5DGYA1DNYUv5RB1zPASbmCaus78PCbcEfvp3cjbR2HxFmnYbEVgZ7NZCCsuBcYLLnUuZYjej54YLoFS
 ```
 
-<img src="docs/xmr.svg" width="160" alt="Monero address QR code">
+<table><tr><td align="center"><img src="docs/btc.svg" width="140" alt="Bitcoin (BTC) address QR code"><br>BTC</td><td align="center"><img src="docs/eth.svg" width="140" alt="Ethereum (ETH) address QR code"><br>ETH</td><td align="center"><img src="docs/ltc.svg" width="140" alt="Litecoin (LTC) address QR code"><br>LTC</td><td align="center"><img src="docs/sol.svg" width="140" alt="Solana (SOL) address QR code"><br>SOL</td><td align="center"><img src="docs/xmr.svg" width="140" alt="Monero (XMR) address QR code"><br>XMR</td></tr></table>
 
 ## Disclaimer
 
