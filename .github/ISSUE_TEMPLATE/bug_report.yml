@@ -1,0 +1,78 @@
+name: Bug report
+description: Something in PS5 Library doesn't work as it should.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One bug per report. Check [Troubleshooting](https://github.com/deox1111/ps5-library#troubleshooting) first; for quick help, ask in the [Discord server](https://discord.gg/QUGdCfpeK7).
+        Don't post game names with download links, or catalog addresses.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The exact message, if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: input
+    id: version
+    attributes:
+      label: PS5 Library version
+      description: Settings → Updates
+      placeholder: "0.7.32"
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Console firmware
+      placeholder: "13.60"
+    validations:
+      required: true
+  - type: input
+    id: shadowmount
+    attributes:
+      label: ShadowMountPlus version
+      placeholder: "1.7beta5"
+  - type: dropdown
+    id: storage
+    attributes:
+      label: Where games go
+      options:
+        - Internal storage
+        - USB drive
+        - Both
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostic report
+      description: Settings → Console → Diagnostic report → Copy (0.7.24 or newer). It leaves out keys, passwords, catalog addresses and download links; read it before you post it.
+      render: text
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or photos
+      description: Optional. Drag images here.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you post
+      options:
+        - label: I use the latest release, or the bug is still there in it.
+          required: true
+        - label: The report has no game download links and no catalog addresses.
+          required: true

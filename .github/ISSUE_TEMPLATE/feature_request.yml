@@ -1,0 +1,33 @@
+name: Feature request
+description: An idea that would make PS5 Library better.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: One idea per request. Requests for games, catalogs or download links are closed.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What's hard or missing today.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea
+      description: How it could work.
+    validations:
+      required: true
+  - type: textarea
+    id: instead
+    attributes:
+      label: What you do instead today
+  - type: dropdown
+    id: often
+    attributes:
+      label: How often you'd use it
+      options:
+        - Every time I use the library
+        - Every week
+        - Now and then

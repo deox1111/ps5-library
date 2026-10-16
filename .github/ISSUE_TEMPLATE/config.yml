@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Help on Discord
+    url: https://discord.gg/QUGdCfpeK7
+    about: Questions and setup help, answered by the community.
+  - name: Troubleshooting
+    url: https://github.com/deox1111/ps5-library#troubleshooting
+    about: Answers to the problems people report most.
