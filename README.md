@@ -189,7 +189,7 @@ These are the two popup script domains observed on October 7, 2026. Keep the rem
 1. Download `ps5-library.elf` from [Releases](../../releases/latest).
 2. Load it with your ELF loader (port 9021) or your payload manager. Add it to **autoload**: the home screen tile only works while the payload is running.
 3. A notification says **PS5 Library added to the home screen**. Open the tile.
-4. The homebrew catalog [evoX-CoreOS](#the-default-catalog) is already on. Add more in **Settings → Catalogs**, see [Catalogs](#catalogs) below.
+4. The homebrew catalog [PS5 Homebrew Catalog](#the-default-catalog) from homebrew.page is already on. Add more in **Settings → Catalogs**, see [Catalogs](#catalogs) below.
 
 ### Update
 
@@ -207,7 +207,7 @@ To reset, delete `/data/ps5-library` and load the ELF again (0.7.8 or newer); th
 
 The guide opens expanded on the game page, in download-source selection and in **Settings → Installation guide**. **Settings → Console** also shows the detected console firmware.
 
-On detected PS5 firmware above 11.60, source selection marks PS5 game sources that the catalog labels as FPKG (fake game packages) as unsupported and asks you to choose a Dump or image instead. A source's own Dump/image label takes precedence over the format of a mixed catalog entry. PS4 titles and packages in a catalog's PKG category, such as the apps in the default homebrew catalog, are not affected. Unknown firmware or source formats are explained rather than guessed; this format check does not verify that every game or backport will run.
+On detected PS5 firmware above 11.60, source selection marks PS5 game sources that the catalog labels as FPKG (fake game packages) as unsupported and asks you to choose a Dump or image instead. A source's own Dump/image label takes precedence over the format of a mixed catalog entry. PS4 titles, packages in a catalog's PKG category and the apps in the default homebrew catalog are not affected. Unknown firmware or source formats are explained rather than guessed; this format check does not verify that every game or backport will run.
 
 - **PS5 firmware above 11.60:** choose a compatible extracted game folder (**Dump**) or a ShadowMountPlus image: `.exfat`, `.ffpkg`, `.ffpfs` or `.ffpfsc`. PS5 game FPKG support is documented through **11.60 inclusive** in [kstuff-lite v1.11](https://github.com/EchoStretch/kstuff-lite/releases/tag/v1.11); support for the payload on newer firmware does not imply support for PS5 fake `.pkg` games there. Guidance checked October 8, 2026.
 - **FPKG and FFPKG are different.** A fake PKG is a `.pkg` installed through the package installer. A `.ffpkg` is a UFS image mounted by ShadowMountPlus. See [ShadowMountPlus's format table](https://github.com/drakmor/ShadowMountPlus/blob/1.7/README.md#current-image-support). The PS5 game FPKG warning is not a blanket restriction on PS4 packages or homebrew.
@@ -248,13 +248,17 @@ Use the **Raw** address. Open the file on GitHub, press **Raw** and copy the add
 
 ### Pegasus DL catalogs
 
-Catalogs made for [Pegasus DL](https://github.com/pegasus-ps5/pegasus-dl) work as they are: add the catalog's address like any other. Both Pegasus package shapes are read (`downloadLinks`, or `url` with `filename`), and every link of a package becomes a download mirror.
+Catalogs made for [Pegasus DL](https://github.com/pegasus-ps5/pegasus-dl) work as they are: add the catalog's address like any other. Both Pegasus package shapes are read (`downloadLinks`, or `url` with `filename`), and every link of a package becomes a download mirror. A game split into parts is one download (0.7.37): links of one host named `… part 1`, `… part 2`, or files named `.part01.rar` or `.7z.001`, become one mirror with every part, downloaded one after another and unpacked together.
 
 A Pegasus **source list** (a file with a `"sources": [...]` list) has no games in it, it names other catalogs. Adding a source list adds every catalog it names, turned on or off as the list says.
 
 ### The default catalog
 
-[evoX-CoreOS](https://github.com/nexgen999/evoX-CoreOS) by nexgen999 is on from the start: homebrew apps and community utilities. Turn it off or remove it in **Settings → Catalogs**; a removed catalog does not come back.
+The [PS5 Homebrew Catalog](https://github.com/darkxex/ps5-homebrew-catalog) by darkxex, the list behind [homebrew.page](https://homebrew.page), is on from the start as **PS5 Homebrew (homebrew.page)**: about 90 homebrew apps, games and tools, each from its author's GitHub release. The library checks every file against the SHA-256 the catalog lists and deletes a file that does not match. Homebrew apps keep their own names and icons; they are not mixed up with Store games that share their title ID. Turn the catalog off or remove it in **Settings → Catalogs**; a removed catalog does not come back.
+
+Up to 0.7.36 the default catalog was evoX-CoreOS. Updating to 0.7.37 removes it once, with its entries; a catalog you add yourself afterwards stays.
+
+Other catalogs in the homebrew.page format (a JSON file with an `apps` list) can be added by their address like any other.
 
 ### Make your own catalog
 
@@ -303,7 +307,7 @@ A complete entry, with a second mirror:
 | Field | | What it does |
 | --- | --- | --- |
 | `entries` | **required** | The list of games. It must contain at least one entry. |
-| `files` | **required** | The files to download: `{"url": "...", "name": "..."}`. `name` is optional; without it the name comes from the URL. Several files make one download, for example the parts of a split archive (`.7z.001`, `.7z.002`). |
+| `files` | **required** | The files to download: `{"url": "...", "name": "...", "sha256": "..."}`. `name` is optional; without it the name comes from the URL. With `sha256` (64 hex digits, 0.7.37 or newer) the library checks the downloaded file and deletes it when it does not match. Several files make one download, for example the parts of a split archive (`.7z.001`, `.7z.002`). |
 | `title` | recommended | The name in the Store. Without it the first file name is used. A version in brackets, like `(v1.02)`, is shown as the version. |
 | `title_id` | recommended | `PPSA01234` or `CUSA01234`. Brings the cover and background art, groups a game with its DLC and updates, marks it **Ready to play** once installed, and checks that the download is the right game. |
 | `kind` | | `game` (default), `dlc` or `update`. |
@@ -366,6 +370,8 @@ What a download can be:
 - **PS4 games or games installed from PKG files are missing in My games.** Update ShadowMountPlus to 1.7beta4 or newer; older versions only list the games they mount.
 - **AllDebrid or Real-Debrid is connected, but a game offers no Download with it.** Neither supports DataNodes, VikingFile, AkiraBox, FileKeeper or Gofile, the hosts most catalogs use. From 0.7.34 the game page names the hosts your account doesn't support. TorBox covers DataNodes and VikingFile.
 - **Installing to internal storage stops with "settings fields have invalid types".** Update to 0.7.34. When ShadowMountPlus scanned only USB folders, the library's request to add `/data/homebrew` was refused by ShadowMountPlus 1.7, which expects its other settings in the same request.
+- **An app or game installed to the internal SSD does not start, while the same one on USB does.** Update to 0.7.37. Files unpacked to the internal SSD were saved without permission to run; USB drives don't store permissions, so everything there may run. 0.7.37 marks every installed folder runnable, and on each start it repairs game folders installed before, on the internal SSD and on USB.
+- **A game split into parts offers every part as a separate mirror, or its last parts are missing.** Update to 0.7.37. Pegasus catalogs list each part as its own link; earlier versions offered the parts as alternatives, so a download held a single part, and links past the 20th were left out. Now the parts on one host are one mirror with every part, and its label says **· N parts**. If the catalog lists fewer parts than the archive has, unpacking cannot finish: the catalog itself is incomplete.
 - **Download with TorBox opened the host's free download or asked for its CAPTCHA.** Update to 0.7.28. Before, a Link-Vault source never offered TorBox, and a TorBox error fell back to the host's free download. Now **Download with TorBox** reads Link-Vault on the PS5 and hands the host's link to TorBox; if TorBox fails, the download shows TorBox's message and **Download from the host instead** is a separate choice. See [Download accounts](#download-accounts).
 - **"Not enough free space" before a download although the game fits.** Update to 0.7.28. Some catalogs list the unpacked game's size as the download's, and the check counted it twice. Now it counts only what is certain until the host sends the file's real size.
 - **A game shows "CAPTCHA / browser".** Choose **Solve CAPTCHA → Open on PS5**. This is available for every host. Files from GitHub releases show **Direct download** and a **Download** button instead. A saved account (AllDebrid, Real-Debrid, TorBox or a host's premium key) that supports the host also offers **Download with** that account.
@@ -380,7 +386,7 @@ Shout-outs:
 - **Pippo26442999**
 - **[ps5upload](https://github.com/phantomptr/ps5upload)** by phantomptr. PS5 Library's package installer is built on it.
 - **[Pegasus DL](https://github.com/pegasus-ps5/pegasus-dl)**. Its catalogs work in PS5 Library too.
-- [evoX-CoreOS](https://github.com/nexgen999/evoX-CoreOS) by nexgen999, the default homebrew catalog
+- [PS5 Homebrew Catalog](https://github.com/darkxex/ps5-homebrew-catalog) by darkxex ([homebrew.page](https://homebrew.page)), the default homebrew catalog
 - [ShadowMountPlus](https://github.com/drakmor/shadowMountPlus) by drakmor
 - [kstuff](https://github.com/EchoStretch/kstuff-lite)
 - [ps5-payload-sdk](https://github.com/ps5-payload-dev/sdk) by John Törnblom
