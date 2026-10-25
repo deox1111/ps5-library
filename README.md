@@ -36,7 +36,7 @@
 - **Made for the controller.** Move with the D-pad, select with Cross, go back with Circle.
 - **Files.** A simple file manager in the top bar for the internal SSD and USB drives: unpack archives, install what you copied over, copy or move between drives, rename, delete. See [Files](#files).
 - **Password-protected archives.** Encrypted RAR4/RAR5, 7z and ZIP unpack on the console, including encrypted names and split RAR/7z sets. The library tries the catalog password, then `pippo`. If neither works, **Enter password** retries unpacking with another password and keeps the downloaded files (0.7.33). In Files, **Unpack with password** takes the password up front, and **Unpack here** asks for it on the spot (0.7.36).
-- **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too. A homebrew catalog is on from the start.
+- **Several catalogs at once.** Every catalog gets its own row in the Store, games first and homebrew after them. Catalogs made for Pegasus DL work too, and a catalog you have as a file can be uploaded from a phone or computer (0.7.39). A homebrew catalog is on from the start.
 - **Covers and details:** size, region and minimum firmware for every game.
 - **Browse by region and size.** Filter by region and size, and sort by size. The region comes from the catalog, or from the tags in its description.
 - **Catalog versions and backports.** Game versions, reported backport revisions/firmware targets, and the original download-source labels stay visible. Dump, FPKG, DLC and Backport links can be distinguished before downloading.
@@ -219,7 +219,7 @@ On detected PS5 firmware above 11.60, source selection marks PS5 game sources th
 
 ## Catalogs
 
-PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalogs you add. A catalog is a JSON file at a web address.
+PS5 Library does not publicly include, host or link to any games. The Store shows the games from the catalogs you add. A catalog is a JSON file at a web address, or a file you upload. Until you add one, only the built-in homebrew catalog is there, and the Store and Browse say so with an **Add a catalog** button (0.7.39).
 
 ### Add a catalog
 
@@ -237,6 +237,10 @@ Good to know:
 - Catalogs are read side by side (0.7.30), so one that doesn't answer doesn't hold up the others. A catalog server that sends nothing for 30 seconds is given up on; one that keeps failing is tried again after 2, 5 and 10 minutes, then every 30 minutes. Each catalog's line says what it is doing: when it was last read, that it is being read now, or why it failed and when it is tried next.
 - Catalogs on the same server are read one after another (0.7.31): the console's DNS failed when it had to look up one name several times at once. If the console can't look up a catalog's server, the library asks Cloudflare's DNS over HTTPS (`1.1.1.1`) once and keeps using it for that server for an hour. A catalog whose content hasn't changed isn't processed again.
 - **Browse** can show the games of one catalog only.
+
+### Upload a catalog file
+
+Have the catalog as a `.json` file rather than an address? Open the library on your phone or computer, go to **Settings → Catalogs** and press **Upload a catalog file** (0.7.39). The file (up to 30 MB) is kept on the console, in `catalogs/` in the library's folder, and read like any other catalog; its line says **Uploaded file**. Uploading a file with the same name again replaces it, and a file without games leaves the uploaded catalog as it was. **Remove** deletes the file too. A Pegasus source list uploaded this way adds the catalogs it names.
 
 ### Catalogs on GitHub
 
@@ -339,6 +343,7 @@ What a download can be:
 
 ## Troubleshooting
 
+- **The Store shows only apps, no games.** PS5 Library comes without games: the built-in catalog is the PS5 Homebrew catalog. Add the catalogs you use in **Settings → Catalogs**, by address or as a file (0.7.39). See [Catalogs](#catalogs).
 - **The PS5 shows much more under "Other" than your games.** Open **Settings → Storage**: it lists the library's downloads and unpacked folders on every drive with their sizes, and what can be deleted. Before 0.7.27, **Remove** and **Clear** left the unpacked folder, and a package's file stayed after its install. See [Storage](#storage).
 - **Reporting a problem.** Attach the report from **Settings → Console → Diagnostic report** (0.7.24 or newer): **Copy** it on a phone or computer, or save it on the console as `diagnostics.txt` in the library's folder. Read it before you share it; download links in it are cut down to their host.
 - **The tile cannot connect after Rest Mode.** Update to 0.7.18. A failed HTTP listener now reopens automatically on the same port; recovery was verified on firmware 13.60 without relaunching the payload. Since 0.7.21 a notification says when the library is active again. If the console or loader terminates the whole process, the payload still needs to be loaded again.
